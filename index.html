@@ -137,8 +137,8 @@
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="label">Calls waiting</div>
+  <div class="card" id="card">
+    <div class="label">Calls waiting — Private Renewals Voice</div>
     <div class="count-row">
       <div class="count" id="count">—</div>
       <div class="unit" id="unit"></div>
@@ -168,7 +168,7 @@
       return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
     }
 
-    const cardEl = document.querySelector('.card');
+    const cardEl = document.getElementById('card');
 
     function setCount(n) {
       countEl.textContent = n;
