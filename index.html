@@ -116,6 +116,24 @@
       font-size: 11px;
       color: #f87171;
     }
+
+    @keyframes flash-warning {
+      0%, 100% { background: #1a1d27; border-color: #2a2d3a; }
+      50% { background: #2d2510; border-color: #fbbf24; }
+    }
+
+    @keyframes flash-alert {
+      0%, 100% { background: #1a1d27; border-color: #2a2d3a; }
+      50% { background: #2d1010; border-color: #f87171; }
+    }
+
+    .card.flashing-warning {
+      animation: flash-warning 1s ease-in-out infinite;
+    }
+
+    .card.flashing-alert {
+      animation: flash-alert 0.6s ease-in-out infinite;
+    }
   </style>
 </head>
 <body>
@@ -150,14 +168,24 @@
       return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
     }
 
+    const cardEl = document.querySelector('.card');
+
     function setCount(n) {
       countEl.textContent = n;
       unitEl.textContent = n === 1 ? 'call' : 'calls';
 
       countEl.classList.remove('alert', 'warning', 'clear');
-      if (n === 0) countEl.classList.add('clear');
-      else if (n <= 3) countEl.classList.add('warning');
-      else countEl.classList.add('alert');
+      cardEl.classList.remove('flashing-warning', 'flashing-alert');
+
+      if (n === 0) {
+        countEl.classList.add('clear');
+      } else if (n <= 3) {
+        countEl.classList.add('warning');
+        cardEl.classList.add('flashing-warning');
+      } else {
+        countEl.classList.add('alert');
+        cardEl.classList.add('flashing-alert');
+      }
     }
 
     async function fetchStats() {
